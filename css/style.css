@@ -6,21 +6,27 @@ body {
   height: 100vh;
 }
 
+.content {
+  display: flex;
+  padding: 20px;
+}
+
+.settings-container {
+  padding: 16px;
+}
+
+.settings-container h3, .settings-container h4 {
+  margin: 0;
+}
+
 .grid-container, .grid-square {
   border: 1px solid black;
 }
 
 .grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  height: 400px;
-  width: 400px;
-}
-
-.grid-square {
-  height: 23px;
-  width: 23px;
-  margin: 0;
+  display: grid;
+  height: 600px;
+  width: 600px;
 }
 
 .filled-square {

@@ -1,6 +1,7 @@
-
-
 const sizeSlider = document.querySelector('#board-size');
+const colorPicker = document.querySelector('#color-picker');
+const rainbowBtn = document.querySelector('#rainbow-btn');
+let colorChoiceHex = '#000'
 let gridSize = 12;
 
 function createGrid() {
@@ -13,14 +14,18 @@ function createGrid() {
     gridSquare.classList.add('grid-square');
     gridContainer.appendChild(gridSquare);
 
-    gridSquare.addEventListener('mouseover', (e)=> {
+    gridSquare.addEventListener('mouseover', e => {
       fillColour(e.target);
     });
   }
 }
 
 function fillColour(selectedSquare) {
-  selectedSquare.classList.add('filled-square');
+  if (typeof colorChoiceHex === "string") {
+    selectedSquare.style.backgroundColor = colorChoiceHex;
+  } else {
+    selectedSquare.style.backgroundColor = colorChoiceHex();
+  }
 }
 
 function resizeGrid() {
@@ -31,7 +36,18 @@ function resizeGrid() {
   createGrid();
 }
 
-sizeSlider.addEventListener('input', (e) => {
+
+rainbowBtn.addEventListener('click', e => {
+  colorChoiceHex = () => {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+  };
+})
+
+colorPicker.addEventListener('input', e => {
+  colorChoiceHex = e.target.value;
+});
+
+sizeSlider.addEventListener('input', e => {
   const sizeDisplay = document.querySelector('#size-display');
   const value = e.target.value;
   sizeDisplay.textContent = `${value} x ${value}`;

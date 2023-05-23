@@ -20,7 +20,7 @@ body {
 }
 
 .grid-container, .grid-square {
-  border: 1px solid black;
+  border: 1px solid rgb(83, 83, 83);
 }
 
 .grid-container {

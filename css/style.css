@@ -22,3 +22,7 @@ body {
   width: 23px;
   margin: 0;
 }
+
+.filled-square {
+  background-color: black;
+}

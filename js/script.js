@@ -1,7 +1,9 @@
 const sizeSlider = document.querySelector('#board-size');
 const colorPicker = document.querySelector('#color-picker');
+const canvasColorPicker = document.querySelector('#canvas-color-picker');
 const rainbowBtn = document.querySelector('#rainbow-btn');
-let colorChoiceHex = '#000'
+let colorChoiceHex = '#000000';
+let canvasColor = '#ffffff';
 let gridSize = 12;
 
 function createGrid() {
@@ -12,8 +14,8 @@ function createGrid() {
   for (let i = 0; i < (gridSize * gridSize); i++) {
     let gridSquare = document.createElement('div');
     gridSquare.classList.add('grid-square');
+    gridSquare.style.backgroundColor = canvasColor;
     gridContainer.appendChild(gridSquare);
-
     gridSquare.addEventListener('mouseover', e => {
       fillColour(e.target);
     });
@@ -21,7 +23,7 @@ function createGrid() {
 }
 
 function fillColour(selectedSquare) {
-  if (typeof colorChoiceHex === "string") {
+  if (typeof colorChoiceHex === 'string') {
     selectedSquare.style.backgroundColor = colorChoiceHex;
   } else {
     selectedSquare.style.backgroundColor = colorChoiceHex();
@@ -36,17 +38,30 @@ function resizeGrid() {
   createGrid();
 }
 
-
+// Activate rainbow mode
 rainbowBtn.addEventListener('click', e => {
   colorChoiceHex = () => {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
   };
-})
+});
 
+// Change brush colour 
 colorPicker.addEventListener('input', e => {
   colorChoiceHex = e.target.value;
 });
 
+
+// Change background colour
+canvasColorPicker.addEventListener('input', e => {
+  let newColor = e.target.value;
+  let gridSquares = document.querySelectorAll('.grid-square');
+  gridSquares.forEach(square => {
+    square.style.backgroundColor = newColor;
+    canvasColor = newColor;
+  });
+});
+
+// Change grid size
 sizeSlider.addEventListener('input', e => {
   const sizeDisplay = document.querySelector('#size-display');
   const value = e.target.value;
@@ -57,3 +72,7 @@ sizeSlider.addEventListener('input', e => {
 
 createGrid();
 
+// random button
+// gradient
+// Eraser toggle
+// Reset

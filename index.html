@@ -6,21 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Etch-A-Sketch</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
   <script src="js/script.js" defer></script>
 </head>
 <body>
+  <h1>Etch-A-Sketch</h1>
   <div class="content">
     <div class="settings-container">
-      <button id="eraser-btn">Eraser Mode</button>
+      <div class="size-settings">
+        <h3>Grid Size</h3>
+        <h4 id="size-display">12 x 12</h4>
+        <input type="range" id="board-size" name="board-size" min="1" max="32" value="12">
+      </div>
+      <div class="brush-color-settings">
+        <h3>Brush Colour</h3>
+        <input type="color" id="color-picker">
+      </div>
+      <div class="canvas-color-settings">
+        <h3>Canvas Colour</h3>
+        <input type="color" id="canvas-color-picker" value="#ffffff">
+      </div>
       <button id="random-btn">Random Colour</button>
       <button id="rainbow-btn">Rainbow Mode</button>
-      <h3>Brush Colour</h3>
-      <input type="color" id="color-picker">
-      <h3>Canvas Colour</h3>
-      <input type="color" id="canvas-color-picker" value="#ffffff">
-      <h3>Grid Size</h3>
-      <h4 id="size-display">12 x 12</h4>
-      <input type="range" id="board-size" name="board-size" min="1" max="32" value="12">
+      <button id="eraser-btn">Eraser Mode</button>
+      <button id="reset-btn">Reset</button>
     </div>
     <div class="grid-container"></div>
   </div>

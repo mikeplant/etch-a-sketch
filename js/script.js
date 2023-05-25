@@ -4,6 +4,7 @@ const canvasColorPicker = document.querySelector('#canvas-color-picker');
 const randomBtn = document.querySelector('#random-btn');
 const rainbowBtn = document.querySelector('#rainbow-btn');
 const eraserBtn = document.querySelector('#eraser-btn');
+const resetBtn = document.querySelector('#reset-btn');
 let colorChoiceHex = '#000000';
 let canvasColor = '#ffffff';
 let gridSize = 12;
@@ -21,6 +22,7 @@ function createGrid() {
     gridContainer.appendChild(gridSquare);
     gridSquare.addEventListener('mouseover', e => {
       fillColour(e.target);
+      console.log(colorChoiceHex)
     });
   }
 }
@@ -49,40 +51,46 @@ function randomColor() {
   return Math.floor(Math.random()*16777215).toString(16);
 }
 
+function deactivateEraser() {
+  if (eraserActive) eraserBtn.classList.toggle('btn-active');
+  eraserActive = false;
+}
+
 // Random Colour choice
 randomBtn.addEventListener('click', () => {
-  eraserActive = false;
+  deactivateEraser();
   colorChoiceHex = '#' + randomColor();
 });
 
 
 // Activate rainbow mode
 rainbowBtn.addEventListener('click', e => {
-  eraserActive = false;
+  deactivateEraser();
   colorChoiceHex = () => {
     return '#' + randomColor();
   };
 });
 
-// Activate eraser
+// Toggle eraser
 eraserBtn.addEventListener('click', () => {
   if (eraserActive) {
-    eraserActive = false;
+    deactivateEraser();
   } else {
     eraserActive = true;
+    eraserBtn.classList.toggle('btn-active');
   }
 })
 
 // Change brush colour 
 colorPicker.addEventListener('input', e => {
-  eraserActive = false;
+  deactivateEraser();
   colorChoiceHex = e.target.value;
 });
 
 
 // Change background colour
 canvasColorPicker.addEventListener('input', e => {
-  eraserActive = false;
+  deactivateEraser();
   let newColor = e.target.value;
   let gridSquares = document.querySelectorAll('.grid-square');
   gridSquares.forEach(square => {
@@ -93,7 +101,7 @@ canvasColorPicker.addEventListener('input', e => {
 
 // Change grid size
 sizeSlider.addEventListener('input', e => {
-  eraserActive = false;
+  deactivateEraser();
   const sizeDisplay = document.querySelector('#size-display');
   const value = e.target.value;
   sizeDisplay.textContent = `${value} x ${value}`;
@@ -101,7 +109,15 @@ sizeSlider.addEventListener('input', e => {
   resizeGrid();
 });
 
+resetBtn.addEventListener('click', () => {
+  deactivateEraser();
+  colorPicker.value = '#000000';
+  colorChoiceHex = '#000000';
+  canvasColorPicker.value = '#ffffff';
+  canvasColor = '#ffffff';
+  resizeGrid();
+})
+
 createGrid();
 
 // gradient
-// Reset

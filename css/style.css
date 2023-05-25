@@ -29,11 +29,14 @@ h1 {
   flex-direction: column;
   justify-content: space-around;
   padding-right: 60px;
+  width: 250px;
   text-align: center;
 }
 
 #board-size {
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   width: 100%;
   height: 7px;
   border-radius: 5px;  
@@ -42,6 +45,7 @@ h1 {
 }
 #board-size::-webkit-slider-thumb {
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
@@ -50,20 +54,54 @@ h1 {
   cursor: pointer;
 }
 
+#board-size::-webkit-slider-thumb:active {
+  background: rgb(114, 113, 113);
+}
+
 .settings-container h3, .settings-container h4 {
   margin: 0;
-  padding-bottom: 10px;
+  padding-bottom: 7px;
+}
+
+img {
+  height: 70px;
+  width: 70px;
+}
+
+.circle {
+  overflow: hidden;
+  padding: 0;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  
+}
+
+.brush-color-settings, .canvas-color-settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+input[type=color]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+  padding: 0;
 }
 
 #color-picker, #canvas-color-picker {
-  width: 133px;
-  height: 50px;
-  background-color: transparent;
-  border: none;
+  height: 80px;
+  width: 80px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .settings-container button {
-  height: 50px;
+  height: 40px;
   background-color: rgb(78, 78, 78);
   color: #fff;
   border-radius: 8px;
@@ -88,6 +126,7 @@ button:active {
   display: grid;
   height: 600px;
   width: 600px;
+  box-shadow: 0px 0px 15px 1px #6d6d6d;
 }
 
 .filled-square {
@@ -96,4 +135,15 @@ button:active {
 
 .settings-container .btn-active {
   box-shadow: 0px 0px 5px 5px #fff;
+}
+
+.settings-container .rainbow-btn-active {
+  box-shadow: 
+    0px 0px 0px 1px rgba(148,0,211,1),
+    0px 0px 1px 2px rgba(75,0,130,1),
+    0px 0px 2px 3px rgba(0,0,255,1),
+    0px 0px 3px 4px rgba(0,255,0,1),
+    0px 0px 4px 5px rgba(255,255,0,1),
+    0px 0px 5px 6px rgba(255,127,0,1),
+    0px 0px 6px 7px rgba(255,0,0,1);
 }

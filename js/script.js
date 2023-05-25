@@ -5,10 +5,13 @@ const randomBtn = document.querySelector('#random-btn');
 const rainbowBtn = document.querySelector('#rainbow-btn');
 const eraserBtn = document.querySelector('#eraser-btn');
 const resetBtn = document.querySelector('#reset-btn');
+const gridlinesBtn = document.querySelector('#gridlines-btn');
 let colorChoiceHex = '#000000';
 let canvasColor = '#ffffff';
 let gridSize = 12;
 let eraserActive = false;
+let rainbowActive = false;
+let gridLinesActive = true;
 
 function createGrid() {
   const gridContainer = document.querySelector('.grid-container');
@@ -22,7 +25,6 @@ function createGrid() {
     gridContainer.appendChild(gridSquare);
     gridSquare.addEventListener('mouseover', e => {
       fillColour(e.target);
-      console.log(colorChoiceHex)
     });
   }
 }
@@ -31,10 +33,10 @@ function fillColour(selectedSquare) {
   if (eraserActive) {
     selectedSquare.style.backgroundColor = canvasColor;
   } else {
-    if (typeof colorChoiceHex === 'string') {
-      selectedSquare.style.backgroundColor = colorChoiceHex;
+    if(rainbowActive) {
+      selectedSquare.style.backgroundColor = randomHexColor(); 
     } else {
-      selectedSquare.style.backgroundColor = colorChoiceHex();
+      selectedSquare.style.backgroundColor = colorChoiceHex;
     }
   }
 }
@@ -47,8 +49,8 @@ function resizeGrid() {
   createGrid();
 }
 
-function randomColor() {
-  return Math.floor(Math.random()*16777215).toString(16);
+function randomHexColor() {
+  return '#' + (Math.random().toString(16) + "000000").slice(2, 8);
 }
 
 function deactivateEraser() {
@@ -56,41 +58,73 @@ function deactivateEraser() {
   eraserActive = false;
 }
 
+function deactivateRainbow() {
+  if (rainbowActive) rainbowBtn.classList.toggle('rainbow-btn-active');
+  rainbowActive = false;
+}
+
+function deactivateModes() {
+  deactivateEraser();
+  deactivateRainbow();
+}
+
 // Random Colour choice
 randomBtn.addEventListener('click', () => {
-  deactivateEraser();
-  colorChoiceHex = '#' + randomColor();
+  deactivateModes();
+  colorChoiceHex = randomHexColor();
+  colorPicker.value = colorChoiceHex;
 });
 
 
 // Activate rainbow mode
 rainbowBtn.addEventListener('click', e => {
   deactivateEraser();
-  colorChoiceHex = () => {
-    return '#' + randomColor();
-  };
+  if (rainbowActive) {
+    deactivateRainbow();
+  } else {
+    rainbowActive = true;
+    rainbowBtn.classList.toggle('rainbow-btn-active');
+  }
 });
 
 // Toggle eraser
 eraserBtn.addEventListener('click', () => {
+  deactivateRainbow();
   if (eraserActive) {
     deactivateEraser();
   } else {
     eraserActive = true;
     eraserBtn.classList.toggle('btn-active');
   }
-})
+});
+
+// Toggle gridlines
+gridlinesBtn.addEventListener('click', () => {
+  let gridSquares = document.querySelectorAll('.grid-square');
+
+  if(gridLinesActive) {
+    gridSquares.forEach(square => {
+      square.style.border = 'none';
+      gridLinesActive = false;
+    });
+  } else {
+    gridSquares.forEach(square => {
+      square.style.border = '1px solid rgb(83, 83, 83)';
+      gridLinesActive = true;
+    });
+  }
+});
 
 // Change brush colour 
 colorPicker.addEventListener('input', e => {
-  deactivateEraser();
+  deactivateModes();
   colorChoiceHex = e.target.value;
 });
 
 
 // Change background colour
 canvasColorPicker.addEventListener('input', e => {
-  deactivateEraser();
+  deactivateModes();
   let newColor = e.target.value;
   let gridSquares = document.querySelectorAll('.grid-square');
   gridSquares.forEach(square => {
@@ -109,12 +143,15 @@ sizeSlider.addEventListener('input', e => {
   resizeGrid();
 });
 
+
+// Reset all settings
 resetBtn.addEventListener('click', () => {
-  deactivateEraser();
+  deactivateModes();
   colorPicker.value = '#000000';
   colorChoiceHex = '#000000';
   canvasColorPicker.value = '#ffffff';
   canvasColor = '#ffffff';
+  gridLinesActive = true;
   resizeGrid();
 })
 

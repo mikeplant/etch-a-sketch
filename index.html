@@ -14,21 +14,25 @@
   <div class="content">
     <div class="settings-container">
       <div class="size-settings">
-        <h3>Grid Size</h3>
         <h4 id="size-display">12 x 12</h4>
         <input type="range" id="board-size" name="board-size" min="1" max="32" value="12">
       </div>
       <div class="brush-color-settings">
-        <h3>Brush Colour</h3>
-        <input type="color" id="color-picker">
+        <img src="images/brush.png">
+        <div class="circle">
+          <input type="color" id="color-picker">
+        </div>
       </div>
       <div class="canvas-color-settings">
-        <h3>Canvas Colour</h3>
-        <input type="color" id="canvas-color-picker" value="#ffffff">
+        <img src="images/canvas.png">
+        <div class="circle">
+          <input type="color" id="canvas-color-picker" value="#ffffff">
+        </div>
       </div>
       <button id="random-btn">Random Colour</button>
       <button id="rainbow-btn">Rainbow Mode</button>
       <button id="eraser-btn">Eraser Mode</button>
+      <button id="gridlines-btn">Toggle Grid</button>
       <button id="reset-btn">Reset</button>
     </div>
     <div class="grid-container"></div>

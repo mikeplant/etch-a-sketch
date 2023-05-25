@@ -1,10 +1,13 @@
 const sizeSlider = document.querySelector('#board-size');
 const colorPicker = document.querySelector('#color-picker');
 const canvasColorPicker = document.querySelector('#canvas-color-picker');
+const randomBtn = document.querySelector('#random-btn');
 const rainbowBtn = document.querySelector('#rainbow-btn');
+const eraserBtn = document.querySelector('#eraser-btn');
 let colorChoiceHex = '#000000';
 let canvasColor = '#ffffff';
 let gridSize = 12;
+let eraserActive = false;
 
 function createGrid() {
   const gridContainer = document.querySelector('.grid-container');
@@ -23,10 +26,14 @@ function createGrid() {
 }
 
 function fillColour(selectedSquare) {
-  if (typeof colorChoiceHex === 'string') {
-    selectedSquare.style.backgroundColor = colorChoiceHex;
+  if (eraserActive) {
+    selectedSquare.style.backgroundColor = canvasColor;
   } else {
-    selectedSquare.style.backgroundColor = colorChoiceHex();
+    if (typeof colorChoiceHex === 'string') {
+      selectedSquare.style.backgroundColor = colorChoiceHex;
+    } else {
+      selectedSquare.style.backgroundColor = colorChoiceHex();
+    }
   }
 }
 
@@ -38,21 +45,44 @@ function resizeGrid() {
   createGrid();
 }
 
+function randomColor() {
+  return Math.floor(Math.random()*16777215).toString(16);
+}
+
+// Random Colour choice
+randomBtn.addEventListener('click', () => {
+  eraserActive = false;
+  colorChoiceHex = '#' + randomColor();
+});
+
+
 // Activate rainbow mode
 rainbowBtn.addEventListener('click', e => {
+  eraserActive = false;
   colorChoiceHex = () => {
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
+    return '#' + randomColor();
   };
 });
 
+// Activate eraser
+eraserBtn.addEventListener('click', () => {
+  if (eraserActive) {
+    eraserActive = false;
+  } else {
+    eraserActive = true;
+  }
+})
+
 // Change brush colour 
 colorPicker.addEventListener('input', e => {
+  eraserActive = false;
   colorChoiceHex = e.target.value;
 });
 
 
 // Change background colour
 canvasColorPicker.addEventListener('input', e => {
+  eraserActive = false;
   let newColor = e.target.value;
   let gridSquares = document.querySelectorAll('.grid-square');
   gridSquares.forEach(square => {
@@ -63,6 +93,7 @@ canvasColorPicker.addEventListener('input', e => {
 
 // Change grid size
 sizeSlider.addEventListener('input', e => {
+  eraserActive = false;
   const sizeDisplay = document.querySelector('#size-display');
   const value = e.target.value;
   sizeDisplay.textContent = `${value} x ${value}`;
@@ -72,7 +103,5 @@ sizeSlider.addEventListener('input', e => {
 
 createGrid();
 
-// random button
 // gradient
-// Eraser toggle
 // Reset

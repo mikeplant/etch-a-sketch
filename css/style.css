@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
   background: url(../images/prism.png);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
@@ -14,6 +14,7 @@ h1 {
   font-family: 'Tangerine';
   font-size: 80px;
   margin: 30px;
+  text-align: center;
 }
 
 .content {
@@ -29,7 +30,7 @@ h1 {
   flex-direction: column;
   justify-content: space-around;
   padding-right: 60px;
-  width: 250px;
+  width: 230px;
   text-align: center;
 }
 
@@ -79,13 +80,14 @@ img {
 
 .brush-color-settings, .canvas-color-settings {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   text-align: left;
 }
 
 input[type=color]::-webkit-color-swatch {
   border: none;
+  box-shadow: 3px 3px 12px -5px #000000;
   border-radius: 50%;
   padding: 0;
 }
@@ -104,6 +106,7 @@ input[type=color]::-webkit-color-swatch {
   height: 40px;
   background-color: rgb(78, 78, 78);
   color: #fff;
+  font-weight: 600;
   border-radius: 8px;
   border: 2px solid #fff;
   font-size: 16px;
@@ -116,6 +119,7 @@ button:hover {
 
 button:active {
   background-color: rgb(37, 37, 37);
+  box-shadow: 0px 0px 3px 1px #fff;
 }
 
 .grid-container, .grid-square {
@@ -134,16 +138,20 @@ button:active {
 }
 
 .settings-container .btn-active {
-  box-shadow: 0px 0px 5px 5px #fff;
+  background: linear-gradient(45deg, #2B9FBB, #F78873);
+  box-shadow: 0px 0px 3px 1px #fff;
+}
+
+@keyframes rainbow-color {
+  0%   { background: red; }
+  20%  { background: orange; }
+  40%  { background: green; }
+  60%  { background: blue; }
+  80%  { background: violet; }
+  100% { background: red; }
 }
 
 .settings-container .rainbow-btn-active {
-  box-shadow: 
-    0px 0px 0px 1px rgba(148,0,211,1),
-    0px 0px 1px 2px rgba(75,0,130,1),
-    0px 0px 2px 3px rgba(0,0,255,1),
-    0px 0px 3px 4px rgba(0,255,0,1),
-    0px 0px 4px 5px rgba(255,255,0,1),
-    0px 0px 5px 6px rgba(255,127,0,1),
-    0px 0px 6px 7px rgba(255,0,0,1);
+  animation: rainbow-color 12s infinite linear;
+  box-shadow: 0px 0px 3px 1px #fff;
 }
